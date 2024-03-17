@@ -15,18 +15,17 @@ export function Table({ events }: TableProps) {
           <tr>
             <th>Name</th>
             <th>Price</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <body>
           {events.map((event) => (
             <tr key={event.getId()}>
               <td>{event.getName()}</td>
-              <td>{event.getPrice()}</td>
+              <td>{event.getPrice()}$</td>
               <td>
-                <span>
-                  <BsFillTrashFill />
-                  <BsFillPencilFill />
+                <span className='actions'>
+                  <BsFillTrashFill className='delete-btn' />
+                  <BsFillPencilFill className='edit-btn' />
                 </span>
               </td>
             </tr>

@@ -19,19 +19,26 @@
 
 .table thead {
   background-color: #ccc;
-  color: #222;
+  color: #2c2c2c;
   display: flex;
   flex-direction: column;
   height: 35px;
+  justify-content: space-evenly;
+}
 
-  justify-content: space-around;
-  padding-left: 10px;
-  padding-right: 10px;
+.table thead tr {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 135px;
+  padding-left: 5px;
+  padding-right: 90px;
 }
 
 .table th,
 .table td {
   padding: 0.6rem;
+  padding-left: 35px;
 }
 
 .table td {
@@ -43,4 +50,18 @@
 
 .table body tr:hover {
   background-color: #eee;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 15px;
+}
+
+.actions svg {
+  cursor: pointer;
+}
+
+.delete-btn {
+  color: #514e4e;
 }
