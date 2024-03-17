@@ -10,6 +10,7 @@ export function Card({ event }: CardProps) {
   return (
     <div className='card'>
       <div className='descr'>
+        <p></p>
         <h2>{event.getName()}</h2>
         <p>{event.getPrice()}$</p>
       </div>

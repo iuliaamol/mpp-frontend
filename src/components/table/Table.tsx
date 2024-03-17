@@ -25,6 +25,11 @@ export function Table({ events }: TableProps) {
     navigate(`/editPage/${event.getId()}`)
   }
 
+  const handleRowClick = (event: Event) => {
+    setSelectedEvent(event)
+    navigate(`/detailPage/${event.getId()}`)
+  }
+
   return (
     <div className='table-wrapper'>
       <table className='table'>
@@ -36,7 +41,7 @@ export function Table({ events }: TableProps) {
         </thead>
         <body>
           {events.map((event) => (
-            <tr key={event.getId()}>
+            <tr key={event.getId()} onClick={() => handleRowClick(event)}>
               <td>{event.getName()}</td>
               <td>{event.getPrice()}$</td>
               <td>
