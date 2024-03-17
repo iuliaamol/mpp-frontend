@@ -1,0 +1,19 @@
+.card {
+  background-color: rgb(209, 209, 209);
+  border-style: ridge;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0.1rem 3rem;
+  width: 500px;
+  height: 50px;
+  border-radius: 10px;
+  margin: 2px;
+}
+
+.descr {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  font-family: Poppins;
+}
