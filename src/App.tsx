@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import { Event } from './models/event'
 import { AddPage } from './pages/addDataForum/addDataForum'
 import './App.css'
+import { EditData } from './pages/editDataForum/editDataForum'
 
 import { Table } from './components/table/Table'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />}></Route>
           <Route path='/addPage' element={<AddPage />} />
+          <Route path='/editPage/:id' element={<EditData />} />
         </Routes>
       </BrowserRouter>
     </EventsContextProvider>
