@@ -5,6 +5,7 @@ import { Event } from '../models/event'
 interface EventsContextType {
   events: Event[]
   addEvent: (newEvent: Event) => void
+  setEvents: React.Dispatch<React.SetStateAction<Event[]>>
 }
 
 // Create the context object
@@ -33,6 +34,7 @@ export function EventsContextProvider({
   const eventsContextValue: EventsContextType = {
     events,
     addEvent,
+    setEvents,
   }
 
   return (
