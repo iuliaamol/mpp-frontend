@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Event } from '../../models/event'
 import { BsFillTrashFill, BsFillPencilFill } from 'react-icons/bs'
+import { RxActivityLog } from 'react-icons/rx'
 import './Table.css'
 
 import { Modal } from '../modal/Modal'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface TableProps {
   events: Event[]
@@ -41,11 +42,18 @@ export function Table({ events }: TableProps) {
         </thead>
         <body>
           {events.map((event) => (
-            <tr key={event.getId()} onClick={() => handleRowClick(event)}>
-              <td>{event.getName()}</td>
+            <tr
+              key={event.getId()}
+              //onClick={() => handleRowClick(event)}
+            >
+              <td>{event.getName()} </td>
               <td>{event.getPrice()}$</td>
               <td>
                 <span className='actions'>
+                  <RxActivityLog
+                    className='edit-btn'
+                    onClick={() => handleRowClick(event)}
+                  />
                   <BsFillTrashFill
                     className='delete-btn'
                     onClick={() => handleDelete(event)}
@@ -57,7 +65,7 @@ export function Table({ events }: TableProps) {
                     />
                   )}
                   <BsFillPencilFill
-                    className='edit-btn'
+                    className='detail-btn'
                     onClick={() => handleEdit(event)}
                   />
                 </span>

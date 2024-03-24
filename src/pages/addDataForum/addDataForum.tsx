@@ -1,12 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import React from 'react'
 import { EventsContext, useEventsContext } from '../../contexts/eventContext'
 import { Event } from '../../models/event'
-import { Card } from '../../components/card/Card'
-import { Button } from '../../components/button/Button'
-import { Link } from 'react-router-dom'
-import { useRef, useContext } from 'react'
+import { useContext } from 'react'
 import './addDataForum.css'
 
 export function AddPage() {
