@@ -29,8 +29,8 @@ export function AddPage() {
   }
   return (
     <>
-      <div className='modal-container'>
-        <div className='modal'>
+      <div className='modal-container' data-testid='modal-container'>
+        <div className='modal' data-testid='modal'>
           <h1>Add a new event</h1>
           <input
             type='text'
@@ -50,7 +50,7 @@ export function AddPage() {
             value={type}
             onChange={(e) => setType(e.target.value)}
           />
-          <button onClick={handleAddEvent}>Add Event</button>
+          <button onClick={handleAddEvent}>Submit</button>
         </div>
       </div>
     </>

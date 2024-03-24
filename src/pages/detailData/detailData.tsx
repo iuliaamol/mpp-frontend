@@ -12,11 +12,11 @@ export function EventDetail() {
   )
 
   return (
-    <div className='container2'>
-      <div className='event-detail'>
+    <div className='container2' data-testid='event-detail-container'>
+      <div className='event-detail' data-testid='event-detail'>
         <h2>Event Details</h2>
         {selectedEvent && (
-          <div className='event-info'>
+          <div className='event-info' data-testid='event-info'>
             <p>Name: {selectedEvent.getName()}</p>
             <p>Price: ${selectedEvent.getPrice()}</p>
             <p>Type: {selectedEvent.getType()}</p>

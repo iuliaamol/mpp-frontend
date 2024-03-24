@@ -57,6 +57,7 @@ export function Table({ events }: TableProps) {
                   <BsFillTrashFill
                     className='delete-btn'
                     onClick={() => handleDelete(event)}
+                    data-testid={`delete-btn-${event.getId()}`}
                   />
                   {modalOpen && (
                     <Modal
