@@ -5,6 +5,7 @@ import { EventDetail } from './pages/detailData/detailData'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import { Home } from './pages/seeData/seeData'
 import { EventsContextProvider } from './contexts/eventContext'
+import { Chart } from './pages/chart/Chart'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path='/addPage' element={<AddPage />} />
           <Route path='/editPage/:id' element={<EditData />} />
           <Route path='/detailPage/:id' element={<EventDetail />} />
+          <Route path='/chartPage' element={<Chart />} />
         </Routes>
       </BrowserRouter>
     </EventsContextProvider>

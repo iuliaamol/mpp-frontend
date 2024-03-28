@@ -10,3 +10,34 @@
   color: #e7e7e7;
   background-color: #2a3132;
 }
+
+.sort-button {
+  color: #2a3132;
+  background-color: #fdfdfd;
+  border-style: #eaeaea;
+  padding: 8px 20px;
+  border-radius: 10px;
+}
+
+.sort-button:hover {
+  color: #e7e7e7;
+  background-color: #2a3132;
+}
+
+.chart-button {
+  color: #2a3132;
+  background-color: #fdfdfd;
+  border-style: #eaeaea;
+  padding: 8px 20px;
+  border-radius: 10px;
+}
+.chart-button:hover {
+  color: #e7e7e7;
+  background-color: #2a3132;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}

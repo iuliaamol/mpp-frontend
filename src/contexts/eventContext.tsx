@@ -24,6 +24,11 @@ export function EventsContextProvider({
     new Event(3, 'Fitness Workshop', 30, 'workshop'),
     new Event(4, 'Food Festival', 40, 'festival'),
     new Event(5, 'Comedy Show', 25, 'show'),
+    new Event(6, 'Tech Conference', 150, 'conference'),
+    new Event(7, 'Music Concert', 75, 'concert'),
+    new Event(8, 'Book Conference', 50, 'conference'),
+    new Event(9, 'Gaming Tournament', 80, 'tournament'),
+    new Event(10, 'Fashion Show', 60, 'show'),
   ])
 
   // Function to add an event to the list
