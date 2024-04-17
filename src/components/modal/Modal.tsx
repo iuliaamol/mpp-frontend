@@ -14,11 +14,31 @@ export function Modal({ selectedEvent, setModalOpen }: ModalProps) {
   const navigate = useNavigate()
   const { events, setEvents } = useEventsContext()
 
-  const onYes = () => {
+  const onYes = async () => {
     if (selectedEvent) {
-      setEvents(events.filter((e) => e.getId() !== selectedEvent.getId()))
-      setModalOpen(false)
-      navigate('/')
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8080/events/${selectedEvent.getId()}`,
+          {
+            method: 'DELETE',
+          }
+        )
+
+        if (response.ok) {
+          // Remove the event from the local state
+          setEvents((prevEvents) =>
+            prevEvents.filter(
+              (event) => event.getId() !== selectedEvent.getId()
+            )
+          )
+          setModalOpen(false)
+          navigate('/')
+        } else {
+          console.error('Failed to delete event:', response.status)
+        }
+      } catch (error) {
+        console.error('Error deleting event:', error)
+      }
     }
   }
   const onNo = () => {

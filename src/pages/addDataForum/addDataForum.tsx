@@ -14,19 +14,39 @@ export function AddPage() {
   const contextValue = useContext(EventsContext) // Access the context
   const { addEvent } = contextValue as { addEvent: (event: Event) => void } // Type assertion
 
-  const handleAddEvent = () => {
+  const handleAddEvent = async () => {
     if (!name || !price || !type) {
       alert('Please fill in all fields')
       return
     }
-    // Create a new Event object using the provided data
-    const newEvent = new Event(events.length + 1, name, parseFloat(price), type)
-    addEvent(newEvent)
-    setName('')
-    setPrice('')
-    setType('')
-    navigate('/') //goes back to the home page
+
+    const newEvent = {
+      id: events.length + 1,
+      name: name,
+      price: parseFloat(price),
+      type: type,
+    }
+
+    try {
+      const response = await fetch('http://127.0.0.1:8080/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newEvent),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to add event')
+      }
+
+      navigate('/') // Go back to the home page after successful addition
+    } catch (error) {
+      console.error('Error adding event:', error)
+      alert('Failed to add event')
+    }
   }
+
   return (
     <>
       <div className='modal-container' data-testid='modal-container'>

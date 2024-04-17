@@ -18,7 +18,7 @@ export function Table({ events }: TableProps) {
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 5 // Change this according to your preference
+  const itemsPerPage = 5
 
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
@@ -52,7 +52,7 @@ export function Table({ events }: TableProps) {
               <th>Price</th>
             </tr>
           </thead>
-          <body>
+          <tbody>
             {currentEvents.map((event) => (
               <tr key={event.getId()}>
                 <td>{event.getName()} </td>
@@ -82,7 +82,7 @@ export function Table({ events }: TableProps) {
                 </td>
               </tr>
             ))}
-          </body>
+          </tbody>
         </table>
         <div className='pagination-bar'>
           <ul className='pagination'>

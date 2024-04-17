@@ -26,7 +26,7 @@ export function EditData() {
     }
   }, [selectedEvent])
 
-  const handleEditEvent = () => {
+  const handleEditEvent = async () => {
     if (!name || !price || !type || !eventId) {
       alert('Please fill in all fields')
       return
@@ -34,13 +34,29 @@ export function EditData() {
 
     // Update the event with the new data
     const updatedEvent = new Event(eventId, name, parseFloat(price), type)
-    const updatedEvents = events.map((event) =>
-      event.getId() === eventId ? updatedEvent : event
-    )
-    setEvents(updatedEvents)
-    navigate('/')
-  }
+    try {
+      const response = await fetch(`http://127.0.0.1:8080/events/${eventId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedEvent),
+      })
 
+      if (response.ok) {
+        // Update the event in the local state
+        const updatedEvents = events.map((event) =>
+          event.getId() === eventId ? updatedEvent : event
+        )
+        setEvents(updatedEvents)
+        navigate('/')
+      } else {
+        console.error('Failed to update event:', response.status)
+      }
+    } catch (error) {
+      console.error('Error updating event:', error)
+    }
+  }
   return (
     <>
       <div className='modal-container'>
