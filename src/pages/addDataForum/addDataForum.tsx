@@ -4,19 +4,22 @@ import { EventsContext, useEventsContext } from '../../contexts/eventContext'
 import { Event } from '../../models/event'
 import { useContext } from 'react'
 import './addDataForum.css'
+import { useUsersContext } from '../../contexts/userContext'
 
 export function AddPage() {
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
   const [type, setType] = useState('')
+  const [selectedUserId, setSelectedUserId] = useState('')
   const navigate = useNavigate()
   const { events } = useEventsContext()
   const contextValue = useContext(EventsContext) // Access the context
   const { addEvent } = contextValue as { addEvent: (event: Event) => void } // Type assertion
+  const { users } = useUsersContext()
 
   const handleAddEvent = async () => {
-    if (!name || !price || !type) {
-      alert('Please fill in all fields')
+    if (!name.trim() || !price.trim() || !type.trim() || !selectedUserId) {
+      alert('Please fill in all fields and select a user')
       return
     }
 
@@ -25,10 +28,11 @@ export function AddPage() {
       name: name,
       price: parseFloat(price),
       type: type,
+      userId: selectedUserId,
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8080/events', {
+      const response = await fetch('http://localhost:8080/api/events', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,6 +74,18 @@ export function AddPage() {
             value={type}
             onChange={(e) => setType(e.target.value)}
           />
+          <select
+            value={selectedUserId}
+            onChange={(e) => setSelectedUserId(e.target.value)}
+          >
+            <option value=''>Select User</option>
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.username}{' '}
+                {/* Assuming user object has a 'name' property */}
+              </option>
+            ))}
+          </select>
           <button onClick={handleAddEvent}>Submit</button>
         </div>
       </div>

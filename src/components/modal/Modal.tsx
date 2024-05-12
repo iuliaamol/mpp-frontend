@@ -4,6 +4,7 @@ import { Event } from '../../models/event'
 
 import React, { useState } from 'react'
 import { useEventsContext } from '../../contexts/eventContext'
+import axios from 'axios'
 
 interface ModalProps {
   selectedEvent: Event | null
@@ -17,22 +18,18 @@ export function Modal({ selectedEvent, setModalOpen }: ModalProps) {
   const onYes = async () => {
     if (selectedEvent) {
       try {
-        const response = await fetch(
-          `http://127.0.0.1:8080/events/${selectedEvent.getId()}`,
-          {
-            method: 'DELETE',
-          }
+        // Send DELETE request using Axios
+        const response = await axios.delete(
+          `http://localhost:8080/api/events/${selectedEvent.id}`
         )
 
-        if (response.ok) {
+        if (response.status === 200) {
           // Remove the event from the local state
           setEvents((prevEvents) =>
-            prevEvents.filter(
-              (event) => event.getId() !== selectedEvent.getId()
-            )
+            prevEvents.filter((event) => event.id !== selectedEvent.id)
           )
           setModalOpen(false)
-          navigate('/')
+          navigate('/seeEvents')
         } else {
           console.error('Failed to delete event:', response.status)
         }
@@ -43,7 +40,7 @@ export function Modal({ selectedEvent, setModalOpen }: ModalProps) {
   }
   const onNo = () => {
     setModalOpen(false)
-    navigate('/')
+    navigate('/seeEvents')
   }
 
   return (

@@ -34,12 +34,12 @@ export function Table({ events }: TableProps) {
 
   const handleEdit = (event: Event) => {
     setSelectedEvent(event)
-    navigate(`/editPage/${event.getId()}`)
+    navigate(`/editPage/${event.id}`)
   }
 
   const handleRowClick = (event: Event) => {
     setSelectedEvent(event)
-    navigate(`/detailPage/${event.getId()}`)
+    navigate(`/detailPage/${event.id}`)
   }
 
   return (
@@ -54,9 +54,9 @@ export function Table({ events }: TableProps) {
           </thead>
           <tbody>
             {currentEvents.map((event) => (
-              <tr key={event.getId()}>
-                <td>{event.getName()} </td>
-                <td>{event.getPrice()}$</td>
+              <tr key={event.id}>
+                <td>{event.name} </td>
+                <td>{event.price}$</td>
                 <td>
                   <span className='actions'>
                     <RxActivityLog
@@ -66,7 +66,7 @@ export function Table({ events }: TableProps) {
                     <BsFillTrashFill
                       className='delete-btn'
                       onClick={() => handleDelete(event)}
-                      data-testid={`delete-btn-${event.getId()}`}
+                      data-testid={`delete-btn-${event.id}`}
                     />
                     {modalOpen && (
                       <Modal

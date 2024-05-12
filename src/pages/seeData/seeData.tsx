@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useEventsContext } from '../../contexts/eventContext'
 import { Table } from '../../components/table/Table'
-import { Event } from '../../models/event'
+import type { Event } from '../../models/event'
 import './seeData.css'
+import axios from 'axios'
 
 export function Home() {
   const { events, setEvents } = useEventsContext()
@@ -26,20 +27,17 @@ export function Home() {
     }
   }, [])
 
-  const fetchEvents = async () => {
+  const fetchEvents = async (): Promise<void> => {
     try {
-      const response = await fetch('http://127.0.0.1:8080/events')
-      if (!response.ok) {
-        throw new Error('Failed ')
-      }
-
-      const eventData = await response.json() // Annotate as any[]
-      const mappedEvents = eventData.map(
-        (event: any) => new Event(event.id, event.name, event.price, event.type)
-      )
-      setEvents(mappedEvents)
+      //http://127.0.0.1:8080/event/
+      const response = await axios.get('http://localhost:8080/api/events')
+      // if (!response.ok) {
+      //   throw new Error('Failed to fetch events')
+      // }
+      //const data = await response.json()
+      setEvents(response.data)
     } catch (error) {
-      console.error('error', error)
+      console.error('Error fetching events:', error)
     }
   }
 
@@ -47,8 +45,12 @@ export function Home() {
     navigate('/addPage')
   }
 
+  const navigateToUsers = () => {
+    navigate('/seeUsers')
+  }
+
   const handleSort = () => {
-    const sortedEvents = [...events].sort((a, b) => a.getPrice() - b.getPrice())
+    const sortedEvents = [...events].sort((a, b) => a.price - b.price)
     setEvents(sortedEvents)
   }
 
@@ -59,6 +61,10 @@ export function Home() {
   return (
     <div className='main-container'>
       <h1>Events</h1>
+      <div className='seeusers'>
+        <button onClick={navigateToUsers}>See Users</button>
+      </div>
+
       <div className='container'>
         <Table events={events}></Table>
       </div>

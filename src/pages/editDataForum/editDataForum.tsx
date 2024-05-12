@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Event } from '../../models/event'
+import type { Event } from '../../models/event'
 import './editDataForum.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEventsContext } from '../../contexts/eventContext'
+import axios from 'axios'
+import { User } from '../../models/user'
 
 export function EditData() {
   const { id } = useParams<{ id: string }>()
@@ -10,53 +12,54 @@ export function EditData() {
   const [price, setPrice] = useState('')
   const [type, setType] = useState('')
   const navigate = useNavigate()
-  const { events, setEvents } = useEventsContext()
-
-  // Find the event with the given ID
-  const eventId = id ? parseInt(id, 10) : undefined
-
-  // Find the event with the given ID
-  const selectedEvent = events.find((event) => event.getId() === eventId)
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
   useEffect(() => {
-    if (selectedEvent) {
-      setName(selectedEvent.getName())
-      setPrice(selectedEvent.getPrice().toString())
-      setType(selectedEvent.getType())
+    //fetch the event from the baackend based on id
+    const fetchEvent = async () => {
+      try {
+        const eventResponse = await axios.get(
+          `http://localhost:8080/api/events/${id}`
+        )
+        setSelectedEvent(eventResponse.data)
+        setName(eventResponse.data.name)
+        setPrice(eventResponse.data.price.toString())
+        setType(eventResponse.data.type)
+
+        // Fetch user details based on the user ID associated with the event
+        const userResponse = await axios.get(
+          `http://localhost:8080/api/users/${eventResponse.data.userId}`
+        )
+        setSelectedUser(userResponse.data)
+        console.log('user', userResponse.data)
+      } catch (error) {
+        console.error('Error fetching event details:', error)
+      }
     }
-  }, [selectedEvent])
+
+    fetchEvent()
+
+    // Cleanup function to prevent memory leaks
+    return () => {
+      setSelectedEvent(null) // Clear selectedEvent when component unmounts
+    }
+  }, [id])
 
   const handleEditEvent = async () => {
-    if (!name || !price || !type || !eventId) {
-      alert('Please fill in all fields')
-      return
-    }
-
-    // Update the event with the new data
-    const updatedEvent = new Event(eventId, name, parseFloat(price), type)
     try {
-      const response = await fetch(`http://127.0.0.1:8080/events/${eventId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedEvent),
+      //update the event
+      await axios.put(`http://localhost:8080/api/events/${id}`, {
+        name,
+        price: parseFloat(price),
+        type,
       })
-
-      if (response.ok) {
-        // Update the event in the local state
-        const updatedEvents = events.map((event) =>
-          event.getId() === eventId ? updatedEvent : event
-        )
-        setEvents(updatedEvents)
-        navigate('/')
-      } else {
-        console.error('Failed to update event:', response.status)
-      }
+      navigate('/seeEvents')
     } catch (error) {
-      console.error('Error updating event:', error)
+      console.log('Error ', error)
     }
   }
+
   return (
     <>
       <div className='modal-container'>
@@ -83,6 +86,9 @@ export function EditData() {
             onChange={(e) => setType(e.target.value)}
             className='input-field'
           />
+          <div className='user-info'>
+            <p>Created by: {selectedUser?.username}</p>
+          </div>
           <button onClick={handleEditEvent} className='edit-button'>
             Edit Event
           </button>
