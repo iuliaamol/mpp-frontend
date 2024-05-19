@@ -1,4 +1,50 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  height: 400px; /* Set a fixed height for the table container */
+  width: 650px;
+  overflow-y: auto;
+}
+
+.usertable-wrapper {
+  max-width: 700px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.usertable {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  box-shadow: 0px 10px 10px #ccc;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.usertable thead {
+  background-color: #2a3132;
+  color: #eaeaea;
+}
+
+.usertable th,
+.usertable td {
+  padding: 0.6rem;
+}
+
+.usertable tbody tr:hover {
+  background-color: #cee6f2;
+}
+
 .userActions {
   display: flex;
-  gap: 15px;
+  justify-content: space-around;
+}
+
+.userActions svg {
+  cursor: pointer;
+}
+
+.addUserButton {
+  margin-top: 20px;
+  text-align: center;
 }

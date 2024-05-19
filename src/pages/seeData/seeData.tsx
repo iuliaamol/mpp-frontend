@@ -59,7 +59,7 @@ export function Home() {
   }
 
   return (
-    <div className='main-container'>
+    <div className='eventsmain-container'>
       <h1>Events</h1>
       <div className='seeusers'>
         <button onClick={navigateToUsers}>See Users</button>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import './mainPage.css'
 
 export function MainPage() {
   const navigate = useNavigate()
@@ -12,7 +13,7 @@ export function MainPage() {
   }
 
   return (
-    <div>
+    <div className='mainContainer'>
       <h1>Event Management System</h1>
       <div>
         <ul>

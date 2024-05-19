@@ -2,15 +2,16 @@ import './detailUser.css'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { User } from '../../models/user'
 
 export function UserDetail() {
   const { id } = useParams<{ id: string }>()
-  const [selectedUser, setSelectedUser] = useState([])
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [userEvents, setUserEvents] = useState([])
   const [showEvents, setShowEvents] = useState(false)
+  //fetch the user details
 
   useEffect(() => {
-    // Fetch user details from the backend based on the id
     const fetchUser = async () => {
       try {
         const response = await axios.get(
@@ -19,32 +20,32 @@ export function UserDetail() {
         setSelectedUser(response.data)
         console.log(response.data)
       } catch (error) {
-        console.error('Error fetching user details:', error)
+        console.error('error', error)
       }
     }
+    fetchUser()
+  }, [id])
 
-    const fetchUserEvents = async () => {
+  //fetch events based on selectedUser
+  useEffect(() => {
+    if (!selectedUser) return
+
+    const fetchEvents = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/events`)
+        console.log('response', response.data)
+        console.log('selectedUser', selectedUser)
         const userEvents = response.data.filter(
-          (event: { userId: any }) => event.userId === selectedUser.id
+          (event: any) => event.userId === selectedUser.id
         )
-
         setUserEvents(userEvents)
-        console.log(userEvents)
+        console.log('userevents', userEvents)
       } catch (error) {
-        console.error('Error fetching user events:', error)
+        console.error('error', error)
       }
     }
-
-    fetchUser()
-    fetchUserEvents()
-
-    // Cleanup function to prevent memory leaks
-    return () => {
-      setSelectedUser(null) // Clear selectedUser when component unmounts
-    }
-  }, [id]) // Fetch user details whenever id changes
+    fetchEvents()
+  }, [selectedUser])
 
   const toggleEvents = () => {
     setShowEvents(!showEvents)
@@ -64,13 +65,18 @@ export function UserDetail() {
                   {showEvents ? 'Hide Events' : 'Show Events'}
                 </button>
                 {showEvents && (
-                  <ul>
-                    {userEvents.map((event) => (
-                      <li key={event.id}>
-                        <p> {event.name}</p>
-                      </li>
-                    ))}
-                  </ul>
+                  <div
+                    className='events-container'
+                    style={{ maxHeight: '200px', overflowY: 'auto' }}
+                  >
+                    <ul>
+                      {userEvents.map((event: any) => (
+                        <li key={event.id}>
+                          <p>{event.name}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
             )}

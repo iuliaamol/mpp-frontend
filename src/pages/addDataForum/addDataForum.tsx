@@ -28,7 +28,7 @@ export function AddPage() {
       name: name,
       price: parseFloat(price),
       type: type,
-      userId: selectedUserId,
+      userId: parseInt(selectedUserId),
     }
 
     try {
@@ -43,11 +43,8 @@ export function AddPage() {
       if (!response.ok) {
         throw new Error('Failed to add event')
       }
-
-      navigate('/') // Go back to the home page after successful addition
     } catch (error) {
-      console.error('Error adding event:', error)
-      alert('Failed to add event')
+      console.log('error', error)
     }
   }
 

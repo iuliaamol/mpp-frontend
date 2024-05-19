@@ -1,26 +1,28 @@
 import { useEffect, useRef, useState } from 'react'
-import { Event } from '../../models/event'
+
 import { BsFillTrashFill, BsFillPencilFill } from 'react-icons/bs'
 import { RxActivityLog } from 'react-icons/rx'
 import './Table.css'
 
-import { Modal } from '../modal/Modal'
+//import { Modal } from '../modal/Modal'
 import { useNavigate } from 'react-router-dom'
+import { User } from '../../models/user'
+import { UserModal } from '../userModal/userModal'
 
-interface TableProps {
-  events: Event[]
+interface UserTableProps {
+  users: User[]
 }
 
-export function Table({ events }: TableProps) {
+export function UserTable({ users }: UserTableProps) {
   const navigate = useNavigate()
   const [modalOpen, setModalOpen] = useState(false)
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
   // Infinite scroll states
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 50
-  const [displayedEvents, setDisplayedEvents] = useState(
-    events.slice(0, itemsPerPage)
+  const [displayedUsers, setDisplayedUsers] = useState(
+    users.slice(0, itemsPerPage)
   )
 
   // Ref for the table container
@@ -49,23 +51,23 @@ export function Table({ events }: TableProps) {
   }, [])
 
   useEffect(() => {
-    const newEvents = events.slice(0, currentPage * itemsPerPage)
-    setDisplayedEvents(newEvents)
-  }, [currentPage, events])
+    const newUsers = users.slice(0, currentPage * itemsPerPage)
+    setDisplayedUsers(newUsers)
+  }, [currentPage, users])
 
-  const handleDelete = (event: Event) => {
-    setSelectedEvent(event)
+  const handleDelete = (user: User) => {
+    setSelectedUser(user)
     setModalOpen(true)
   }
 
-  const handleEdit = (event: Event) => {
-    setSelectedEvent(event)
-    navigate(`/editPage/${event.id}`)
+  const handleEdit = (user: User) => {
+    setSelectedUser(user)
+    navigate(`/editUserPage/${user.id}`)
   }
 
-  const handleRowClick = (event: Event) => {
-    setSelectedEvent(event)
-    navigate(`/detailPage/${event.id}`)
+  const handleRowClick = (user: User) => {
+    setSelectedUser(user)
+    navigate(`/detailUserPage/${user.id}`)
   }
 
   return (
@@ -79,30 +81,30 @@ export function Table({ events }: TableProps) {
             </tr>
           </thead>
           <tbody>
-            {displayedEvents.map((event) => (
-              <tr key={event.id}>
-                <td>{event.name} </td>
-                <td>{event.price}$</td>
+            {displayedUsers.map((user) => (
+              <tr key={user.id}>
+                <td>{user.username} </td>
+                <td>{user.email}$</td>
                 <td>
                   <span className='actions'>
                     <RxActivityLog
                       className='edit-btn'
-                      onClick={() => handleRowClick(event)}
+                      onClick={() => handleRowClick(user)}
                     />
                     <BsFillTrashFill
                       className='delete-btn'
-                      onClick={() => handleDelete(event)}
-                      data-testid={`delete-btn-${event.id}`}
+                      onClick={() => handleDelete(user)}
+                      data-testid={`delete-btn-${user.id}`}
                     />
                     {modalOpen && (
-                      <Modal
-                        selectedEvent={selectedEvent}
+                      <UserModal
+                        selectedUser={selectedUser}
                         setModalOpen={setModalOpen}
                       />
                     )}
                     <BsFillPencilFill
                       className='detail-btn'
-                      onClick={() => handleEdit(event)}
+                      onClick={() => handleEdit(user)}
                     />
                   </span>
                 </td>
@@ -110,20 +112,6 @@ export function Table({ events }: TableProps) {
             ))}
           </tbody>
         </table>
-        {/* <div className='pagination-bar'>
-          <ul className='pagination'>
-            {Array.from({
-              length: Math.ceil(events.length / itemsPerPage),
-            }).map((_, index) => (
-              <li key={index}>
-                <button onClick={() => paginate(index + 1)}>{index + 1}</button>
-              </li>
-            ))}
-          </ul>
-          <span>
-            {`Showing ${indexOfFirstItem + 1}-${Math.min(indexOfLastItem, events.length)} of ${events.length}`}
-          </span>
-        </div> */}
       </div>
     </div>
   )
