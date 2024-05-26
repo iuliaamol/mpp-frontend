@@ -22,7 +22,7 @@ export function EditUser() {
         setSelectedUser(response.data)
         setUsername(response.data.username)
         setEmail(response.data.email)
-        setPassword(response.data.password)
+        //setPassword(response.data.password)
       } catch (error) {
         console.error('Error fetching user details:', error)
       }
@@ -42,7 +42,7 @@ export function EditUser() {
       await axios.put(`http://localhost:8080/api/users/${id}`, {
         username,
         email,
-        password,
+        //password,
       })
       navigate('/seeUsers')
     } catch (error) {
@@ -69,13 +69,13 @@ export function EditUser() {
             onChange={(e) => setEmail(e.target.value)}
             className='input-field'
           />
-          <input
+          {/* <input
             type='password'
             placeholder='Password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className='input-field'
-          />
+          /> */}
           <button onClick={handleEditUser} className='edit-button'>
             Edit User
           </button>

@@ -46,6 +46,7 @@ export function AddPage() {
     } catch (error) {
       console.log('error', error)
     }
+    navigate('/seeEvents')
   }
 
   return (

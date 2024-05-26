@@ -29,12 +29,7 @@ export function Home() {
 
   const fetchEvents = async (): Promise<void> => {
     try {
-      //http://127.0.0.1:8080/event/
       const response = await axios.get('http://localhost:8080/api/events')
-      // if (!response.ok) {
-      //   throw new Error('Failed to fetch events')
-      // }
-      //const data = await response.json()
       setEvents(response.data)
     } catch (error) {
       console.error('Error fetching events:', error)
@@ -52,6 +47,7 @@ export function Home() {
   const handleSort = () => {
     const sortedEvents = [...events].sort((a, b) => a.price - b.price)
     setEvents(sortedEvents)
+    navigate('/seeEvents')
   }
 
   const handleChart = () => {

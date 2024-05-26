@@ -84,7 +84,7 @@ export function UserTable({ users }: UserTableProps) {
             {displayedUsers.map((user) => (
               <tr key={user.id}>
                 <td>{user.username} </td>
-                <td>{user.email}$</td>
+                <td>{user.email}</td>
                 <td>
                   <span className='actions'>
                     <RxActivityLog

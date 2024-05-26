@@ -32,12 +32,15 @@ export function UserDetail() {
 
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/events`)
+        const response = await axios.get(
+          `http://localhost:8080/api/events/user/${id}`
+        )
+        const userEvents = response.data
         console.log('response', response.data)
         console.log('selectedUser', selectedUser)
-        const userEvents = response.data.filter(
-          (event: any) => event.userId === selectedUser.id
-        )
+        // const userEvents = response.data.filter(
+        //   (event: any) => event.userId === selectedUser.id
+        // )
         setUserEvents(userEvents)
         console.log('userevents', userEvents)
       } catch (error) {

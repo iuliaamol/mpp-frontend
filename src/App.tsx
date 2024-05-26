@@ -12,6 +12,9 @@ import { SeeUsers } from './pages/seeUsers/seeUsers'
 import { AddUserPage } from './pages/addUserPage/addUserPage'
 import { UserDetail } from './pages/detailUser/detailUser'
 import { EditUser } from './pages/editUserPage/editUserPage'
+import { Login } from './pages/loginPage/loginPage'
+import { Register } from './pages/registerPage/registerPage'
+import { UserEventsPage } from './pages/userPage/userPage'
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
             <Route path='/editPage/:id' element={<EditData />} />
             <Route path='/detailPage/:id' element={<EventDetail />} />
             <Route path='/chartPage' element={<Chart />} />
+            <Route path='/loginPage' element={<Login />} />
+            <Route path='/registerPage' element={<Register />} />
+            <Route path='/userPage' element={<UserEventsPage />} />
           </Routes>
         </BrowserRouter>
       </UsersContextProvider>

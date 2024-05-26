@@ -4,12 +4,12 @@ import './mainPage.css'
 
 export function MainPage() {
   const navigate = useNavigate()
-  const handleSeeEvents = () => {
-    navigate('/seeEvents')
+  const handleLogin = () => {
+    navigate('/loginPage')
   }
 
-  const handleSeeUsers = () => {
-    navigate('/seeUsers')
+  const handleRegister = () => {
+    navigate('/registerPage')
   }
 
   return (
@@ -18,10 +18,10 @@ export function MainPage() {
       <div>
         <ul>
           <li>
-            <button onClick={handleSeeEvents}>See Events</button>
+            <button onClick={handleLogin}>Login</button>
           </li>
           <li>
-            <button onClick={handleSeeUsers}>See Users</button>
+            <button onClick={handleRegister}>Register</button>
           </li>
         </ul>
       </div>
